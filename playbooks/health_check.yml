@@ -2,21 +2,24 @@
 - name: Cisco XR Health Check
   hosts: xr_device
   gather_facts: false
-  connection: ssh
+  connection: ansible.netcommon.network_cli
 
   tasks:
-    - name: Run all show commands
-      ansible.builtin.raw: |
-        show version
-        show platform
-        show ip interface brief
+    - name: Run show commands
+      cisco.iosxr.iosxr_command:
+        commands:
+          - show version
+          - show platform
+          - show ip interface brief
       register: command_output
 
     - name: Build health report
       ansible.builtin.set_fact:
         health_report:
           device_ip: "{{ ansible_host }}"
-          output: "{{ command_output.stdout_lines | default([]) }}"
+          show_version: "{{ command_output.stdout[0] | default('') }}"
+          show_platform: "{{ command_output.stdout[1] | default('') }}"
+          show_ip_interface_brief: "{{ command_output.stdout[2] | default('') }}"
           status: "healthy"
 
     - name: Display health report
