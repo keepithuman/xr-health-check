@@ -1,6 +1,0 @@
----
-collections:
-  - name: cisco.iosxr
-    version: ">=6.0.0"
-  - name: ansible.netcommon
-    version: ">=5.0.0"

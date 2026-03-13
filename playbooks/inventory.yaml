@@ -7,6 +7,8 @@ all:
           ansible_host: "{{ device_ip }}"
           ansible_user: "{{ device_username }}"
           ansible_password: "{{ device_password }}"
-          ansible_connection: ansible.netcommon.network_cli
+          ansible_connection: network_cli
           ansible_network_os: cisco.iosxr.iosxr
-          ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+          ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+          ansible_host_key_checking: false
+          ansible_paramiko_host_key_checking: false
