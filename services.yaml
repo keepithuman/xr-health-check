@@ -1,0 +1,49 @@
+decorators:
+  - name: xr-health-check
+    schema:
+      $id: xr-health-check
+      $schema: https://json-schema.org/draft/202012/schema
+      properties:
+        device_ip:
+          type: string
+          description: "Cisco IOS-XR device IP address"
+          examples: ["172.20.100.63"]
+        device_username:
+          type: string
+          description: "SSH username for device"
+        device_password:
+          type: string
+          description: "SSH password for device"
+      required:
+        - device_ip
+        - device_username
+        - device_password
+      type: object
+      additionalProperties: false
+
+repositories:
+  - name: xr-health-check-repo
+    url: https://github.com/keepithuman/xr-health-check.git
+    reference: main
+
+services:
+  - name: xr-health-check
+    type: ansible-playbook
+    description: Runs show version, show platform, and show ip interface brief on a Cisco XR device and returns structured health report
+    playbooks:
+      - health_check.yml
+    working-directory: playbooks
+    repository: xr-health-check-repo
+    decorator: xr-health-check
+    tags:
+      - cisco
+      - xr
+      - health-check
+    runtime:
+      inventory:
+        - inventory.yaml
+      config-file: ansible.cfg
+      req-file: requirements.yml
+      env:
+        ANSIBLE_HOST_KEY_CHECKING: "false"
+        ANSIBLE_STDOUT_CALLBACK: json

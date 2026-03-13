@@ -1,0 +1,11 @@
+---
+all:
+  children:
+    xr_device:
+      hosts:
+        xr-router:
+          ansible_host: "{{ device_ip }}"
+          ansible_user: "{{ device_username }}"
+          ansible_password: "{{ device_password }}"
+          ansible_network_os: cisco.iosxr.iosxr
+          ansible_connection: ansible.netcommon.network_cli
