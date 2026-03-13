@@ -7,5 +7,5 @@ all:
           ansible_host: "{{ device_ip }}"
           ansible_user: "{{ device_username }}"
           ansible_password: "{{ device_password }}"
-          ansible_network_os: cisco.iosxr.iosxr
-          ansible_connection: ansible.netcommon.network_cli
+          ansible_connection: ssh
+          ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'

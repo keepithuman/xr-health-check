@@ -29,7 +29,7 @@ repositories:
 services:
   - name: xr-health-check
     type: ansible-playbook
-    description: Runs show version, show platform, and show ip interface brief on a Cisco XR device and returns structured health report
+    description: Runs show version, show platform, and show ip interface brief on a Cisco XR device via SSH
     playbooks:
       - health_check.yml
     working-directory: playbooks
@@ -43,7 +43,6 @@ services:
       inventory:
         - inventory.yaml
       config-file: ansible.cfg
-      req-file: requirements.yml
       env:
         ANSIBLE_HOST_KEY_CHECKING: "false"
         ANSIBLE_STDOUT_CALLBACK: json
