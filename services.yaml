@@ -43,6 +43,7 @@ services:
       inventory:
         - inventory.yaml
       config-file: ansible.cfg
+      req-file: requirements.txt
       env:
         ANSIBLE_HOST_KEY_CHECKING: "false"
         ANSIBLE_STDOUT_CALLBACK: json
