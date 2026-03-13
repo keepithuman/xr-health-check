@@ -5,25 +5,18 @@
   connection: ssh
 
   tasks:
-    - name: Get show version
-      ansible.builtin.raw: show version
-      register: version_output
-
-    - name: Get show platform
-      ansible.builtin.raw: show platform
-      register: platform_output
-
-    - name: Get interface summary
-      ansible.builtin.raw: show ip interface brief
-      register: interface_output
+    - name: Run all show commands
+      ansible.builtin.raw: |
+        show version
+        show platform
+        show ip interface brief
+      register: command_output
 
     - name: Build health report
       ansible.builtin.set_fact:
         health_report:
           device_ip: "{{ ansible_host }}"
-          version: "{{ version_output.stdout_lines | default([]) }}"
-          platform: "{{ platform_output.stdout_lines | default([]) }}"
-          interfaces: "{{ interface_output.stdout_lines | default([]) }}"
+          output: "{{ command_output.stdout_lines | default([]) }}"
           status: "healthy"
 
     - name: Display health report
